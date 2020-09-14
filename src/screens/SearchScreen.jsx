@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import useRestaurants from "../hooks/useRestaurants";
 import RestaurantsList from "../components/RestaurantsList";
@@ -16,7 +16,7 @@ const SearchScreen = () => {
   };
 
   return (
-    <View>
+    <>
       <SearchBar
         query={query}
         onQueryChange={setQuery}
@@ -24,23 +24,27 @@ const SearchScreen = () => {
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
       {restaurants.length > 0 ? (
-        <View style={{ margin: 20 }}>
-          <Text>We have found {restaurants.length} Results.</Text>
-          <RestaurantsList
-            results={filterByPriceLevel(1)}
-            title='Cost Effecive'
-          />
-          <RestaurantsList
-            results={filterByPriceLevel(2)}
-            title='Bit Pricier'
-          />
-          <RestaurantsList
-            results={[...filterByPriceLevel(3), ...filterByPriceLevel(4)]}
-            title='Big Spender'
-          />
-        </View>
+        <>
+          <Text style={{ marginLeft: 15, marginVertical: 5 }}>
+            We have found {restaurants.length} Results.
+          </Text>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <RestaurantsList
+              results={filterByPriceLevel(1)}
+              title='Cost Effecive'
+            />
+            <RestaurantsList
+              results={filterByPriceLevel(2)}
+              title='Bit Pricier'
+            />
+            <RestaurantsList
+              results={[...filterByPriceLevel(3), ...filterByPriceLevel(4)]}
+              title='Big Spender'
+            />
+          </ScrollView>
+        </>
       ) : null}
-    </View>
+    </>
   );
 };
 
